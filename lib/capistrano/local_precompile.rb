@@ -25,10 +25,9 @@ namespace :deploy do
     desc "Actually precompile the assets locally"
     task :prepare do
       run_locally do
-        with rails_env: fetch(:precompile_env) do
-          execute "rake", "assets:clean"
-          execute "rake", "assets:precompile"
-        end
+        env = fetch(:precompile_env)
+        execute "RAILS_ENV=#{env} rake assets:clean"
+        execute "RAILS_ENV=#{env} rake assets:precompile"
       end
     end
 
